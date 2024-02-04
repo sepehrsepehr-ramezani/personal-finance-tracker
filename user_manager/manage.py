@@ -1,9 +1,10 @@
-from database.database_manager import Database
-from pass_manager.pass_manager import hash_with_salt, check_password
+from user_manager.database.database_manager import Database
+from user_manager.pass_manager.pass_manager import hash_with_salt, check_password
 import sys
 
-def main(string):
-
+def user_manager(string):
+    
+    db = Database("user_manager/database/database.db")
     if string == 'sign up':
         username = input("username: ")
         password = input("password: ")
@@ -24,6 +25,8 @@ def main(string):
             db.insert_user_data(username, hashed_password)
             print("you've signed up seccessfully")
         
+        return username
+        
             
             
 
@@ -37,7 +40,7 @@ def main(string):
 
             if flag:
                 print("User is verified")
-                sys.exit()
+                return username
         
             if not flag:
                 print("either username or password is not correct")
@@ -47,9 +50,9 @@ def main(string):
             print("either username or password is not correct")
             sys.exit()
 
-if __name__ == "__main__":
-    string = input("sign in \nsign up\n\t")
-    db = Database("database/database.db")
-    main(string)
 
+        
 
+    
+    
+    

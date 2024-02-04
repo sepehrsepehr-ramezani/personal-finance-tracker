@@ -1,8 +1,13 @@
 import sqlite3
+from jdatetime import datetime
 
 class Database:
     def __init__(self, db_name):
-        self.conn = sqlite3.connect(db_name)
+        now = datetime.now()
+        year = now.strftime("%Y")
+        month = now.strftime("%B")
+        print(f"usrs/{db_name}/{year}/{month}")
+        self.conn = sqlite3.connect(f"usrs/{db_name}/{year}/{month}/database.db")
         self.cursor = self.conn.cursor()
         self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS expense(
                             date TEXT,
@@ -30,11 +35,13 @@ class Database:
                             amount BIGINT
         );""")
 
-    def sore_data(self, table_name, date, text, amount):
+    def store_data(self, table_name, date, text, amount):
+        print(table_name, date, text,amount)
         self.cursor.execute(f"INSERT INTO {table_name} VALUES(?,?,?)", [date, text, amount])
+        self.conn.commit()
     
     def read_data(self, table_name):
-        self.execute(f"SELECT * FROM {table_name}")
+        self.cursor.execute(f"SELECT * FROM {table_name}")
         abc = self.cursor.fetchall()
         return abc
     

@@ -1,6 +1,8 @@
-from finantial_manager.finantial_cal import Calc
-from database.db_manager import Database
+from sample_files.finantial_manager.finantial_cal import Calc
+from sample_files.database.db_manager import Database
 from tabulate import tabulate
+from jdatetime import datetime
+
 
 def reaction(user_name, user_wil):
     if user_wil == 'short report':
@@ -49,3 +51,11 @@ def reaction(user_name, user_wil):
         db = Database(user_name)
         data = db.read_data('income')
         print(tabulate(data, headers=["Date", "Text", "Amount"]))
+
+    if user_wil == 'add':
+        db = Database(user_name)
+        now = datetime.now()
+        formatted_now = now.strftime("%Y/%m/%d - %H:%M")
+        text = input('text: ')
+        amount = input('amount: ')
+        db.store_data('expense',formatted_now, text, amount)

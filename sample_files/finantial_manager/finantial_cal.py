@@ -1,5 +1,4 @@
-from typing import Any
-from database.db_manager import Database
+from sample_files.database.db_manager import Database
 
 class Calc:
     def __init__(self, db_name):
