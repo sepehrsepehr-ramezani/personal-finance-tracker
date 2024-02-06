@@ -3,6 +3,7 @@ from sample_files.database.db_manager import Database
 from tabulate import tabulate
 from jdatetime import datetime
 import pandas as pd
+from colorama import Fore, Style
 
 
 def reaction(user_name, user_will):
@@ -69,11 +70,20 @@ def reaction(user_name, user_will):
         db.store_data(user_will ,formatted_now, text, amount)
 
     if user_will == 'all':
-        expense = db.read_data("expense")
-        income = db.read_data("income")
-        cash_income = db.read_data("cash_income")
-        cash_expense = db.read_data("cash_expense")
-        cash_withdrawal = db.read_data("cash_withdrawal")
+        expense = [list(t) for t in db.read_data("expense")]
+        income = [list(t) for t in db.read_data("income")]
+        cash_income = [list(t) for t in db.read_data("cash_income")]
+        cash_expense = [list(t) for t in db.read_data("cash_expense")]
+        cash_withdrawal = [list(t) for t in db.read_data("cash_withdrawal")]
+        for i in expense:
+            i[2] = f"{Fore.RED}{i[2]}{Style.RESET_ALL}"
+        for i in cash_expense:
+            i[2] = f"{Fore.RED}{i[2]}{Style.RESET_ALL}"
+        for i in income:
+            i[2] = f"{Fore.GREEN}{i[2]}{Style.RESET_ALL}"
+        for i in cash_income:
+            i[2] = f"{Fore.GREEN}{i[2]}{Style.RESET_ALL}"
+
 
         #print(expense, income, cash_income, cash_expense, cash_withdrawal)
         l = [expense, income, cash_income, cash_expense, cash_withdrawal]
