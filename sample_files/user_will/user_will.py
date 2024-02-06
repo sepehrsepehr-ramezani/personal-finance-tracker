@@ -1,31 +1,34 @@
 from sample_files.finantial_manager.finantial_cal import Calc
 from sample_files.database.db_manager import Database
-from tabulate import tabulate
-from jdatetime import datetime
-import pandas as pd
 from colorama import Fore, Style
+from jdatetime import datetime
+from tabulate import tabulate
 
 
 def reaction(user_name, user_will):
+
     db = Database(user_name)
+
     if user_will == 'short report':
+
         calc = Calc(user_name)
-        acount_balance = calc.acount_balance()
-        expense = calc.expense()
-        cash_balance = calc.cash_balance()
         income = calc.income()
+        expense = calc.expense()
         cash_income = calc.cash_income()
+        cash_expense =calc.cash_expense()      
+        cash_balance = calc.cash_balance()
+        acount_balance = calc.acount_balance()
         cash_withdrawal = calc.cash_withdrawal()
-        cash_expense =calc.cash_expense()
-        
+    
         data = [
             ["Account Balance", acount_balance],
-            ["Expense", expense],
             ["Cash Balance", cash_balance],
-            ["Income", income],
-            ["Cash Income", cash_income],
             ["Cash Withdrawal", cash_withdrawal],
-            ["Cash Expense", cash_expense]
+            ["Expense", expense],
+            ["Cash Expense", cash_expense],
+            ["Income", income],
+            ["Cash Income", cash_income] 
+
         ]
         print("\n")
         print(tabulate(data, headers=["Item", "Value"]))
@@ -70,24 +73,26 @@ def reaction(user_name, user_will):
         db.store_data(user_will ,formatted_now, text, amount)
 
     if user_will == 'all':
-        expense = [list(t) for t in db.read_data("expense")]
         income = [list(t) for t in db.read_data("income")]
+        expense = [list(t) for t in db.read_data("expense")]
         cash_income = [list(t) for t in db.read_data("cash_income")]
         cash_expense = [list(t) for t in db.read_data("cash_expense")]
         cash_withdrawal = [list(t) for t in db.read_data("cash_withdrawal")]
+
         for i in expense:
             i[2] = f"{Fore.RED}{i[2]}{Style.RESET_ALL}"
         for i in cash_expense:
             i[2] = f"{Fore.RED}{i[2]}{Style.RESET_ALL}"
-        for i in income:
-            i[2] = f"{Fore.GREEN}{i[2]}{Style.RESET_ALL}"
         for i in cash_income:
             i[2] = f"{Fore.GREEN}{i[2]}{Style.RESET_ALL}"
-
+        for i in income:
+            i[2] = f"{Fore.GREEN}{i[2]}{Style.RESET_ALL}"
 
         #print(expense, income, cash_income, cash_expense, cash_withdrawal)
         l = [expense, income, cash_income, cash_expense, cash_withdrawal]
+
         data = []
+
         for i in l:
             for x in range(len(i)):
                 data.append(i[x])

@@ -1,5 +1,5 @@
-from user_manager.database.database_manager import Database
 from user_manager.pass_manager.pass_manager import hash_with_salt, check_password
+from user_manager.database.database_manager import Database
 from colorama import Fore, Style
 import sys
 

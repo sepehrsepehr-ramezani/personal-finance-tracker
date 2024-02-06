@@ -1,7 +1,7 @@
-import os
 from user_manager.manage import user_manager
 from sample_files.manage import manage
 from jdatetime import datetime
+import os
 
 #create folder for each user (usrs/year/month)
 def create_usr_folder(username, year, month):
@@ -22,6 +22,7 @@ def auth():
     manage(username)
 
 if __name__ == "__main__":
+
     string = input("sign in \nsign up\n\t")
     
     if string == "sign in":

@@ -1,5 +1,5 @@
-import sqlite3
 from jdatetime import datetime
+import sqlite3
 
 class Database:
     def __init__(self, db_name):
